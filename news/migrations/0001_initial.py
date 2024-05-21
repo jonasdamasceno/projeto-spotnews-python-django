@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                     "name",
                     models.CharField(
                         max_length=200,
-                        validators=[news.validators.validate_category_name],
+                        validators=[news.validators.validate_category_length],
                     ),
                 ),
             ],
