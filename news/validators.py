@@ -1,9 +1,9 @@
 from django.core.exceptions import ValidationError
 
 
-def validate_empty_data(value):
+def validate_empty(value):
     if len(value) == 0:
-        raise ValidationError("Este campo não pode estar vazio.")
+        raise ValidationError("Campo Obrigtório.")
 
 
 def validate_max_length(value):
@@ -18,7 +18,7 @@ def validate_title_length(value):
         raise ValidationError("O título deve conter pelo menos 2 palavras.")
 
 
-def validate_date_format(value):
+def validate_date(value):
     if not value.strftime("%Y-%m-%d"):
         raise ValidationError(
             f"O valor {value} tem um formato de data inválido. Deve ser no formato  YYYY-MM-DD."  # noqa

@@ -1,15 +1,15 @@
 from django.db import models
 from news.validators import (
-    validate_empty_data,
+    validate_empty,
     validate_max_length,
     validate_title_length,
-    validate_date_format,
+    validate_date,
 )
 
 
 class Category(models.Model):
     name = models.CharField(
-        max_length=200, validators=[validate_empty_data, validate_max_length]
+        max_length=200, validators=[validate_empty, validate_max_length]
     )
 
     def __str__(self):
@@ -18,16 +18,16 @@ class Category(models.Model):
 
 class User(models.Model):
     name = models.CharField(
-        max_length=200, validators=[validate_empty_data, validate_max_length]
+        max_length=200, validators=[validate_empty, validate_max_length]
     )
     email = models.EmailField(
-        max_length=200, validators=[validate_empty_data, validate_max_length]
+        max_length=200, validators=[validate_empty, validate_max_length]
     )
     password = models.CharField(
-        max_length=200, validators=[validate_empty_data, validate_max_length]
+        max_length=200, validators=[validate_empty, validate_max_length]
     )
     role = models.CharField(
-        max_length=200, validators=[validate_empty_data, validate_max_length]
+        max_length=200, validators=[validate_empty, validate_max_length]
     )
 
     def __str__(self):
@@ -38,19 +38,19 @@ class News(models.Model):
     title = models.CharField(
         max_length=200,
         validators=[
-            validate_empty_data,
+            validate_empty,
             validate_max_length,
             validate_title_length,
         ],
     )
-    content = models.TextField(validators=[validate_empty_data])
+    content = models.TextField(validators=[validate_empty])
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="news"
     )
-    created_at = models.DateField(validators=[validate_date_format])
+    created_at = models.DateField(validators=[validate_date])
     image = models.ImageField(upload_to="img/", null=True, blank=True)
     categories = models.ManyToManyField(
-        Category, related_name="news", validators=[validate_empty_data]
+        Category, related_name="news", validators=[validate_empty]
     )
 
     def __str__(self) -> str:
