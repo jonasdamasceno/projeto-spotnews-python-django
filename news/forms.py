@@ -28,6 +28,6 @@ class CreateNewsModelForm(forms.ModelForm):
             attrs={"type": "date"}
         )
         self.fields["image"].label = "URL da Imagem"
-        self.fields["categories"].widget = forms.CheckboxSelectMultiple()
         self.fields["categories"].label = "Categorias"
+        self.fields["categories"].widget = forms.CheckboxSelectMultiple()
         self.fields["categories"].queryset = Category.objects.all()

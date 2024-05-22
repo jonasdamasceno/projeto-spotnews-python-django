@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from news.validators import (
     validate_empty,
     validate_max_length,
@@ -18,16 +19,25 @@ class Category(models.Model):
 
 class User(models.Model):
     name = models.CharField(
-        max_length=200, validators=[validate_empty, validate_max_length]
+        max_length=200,
+        validators=[validate_empty, validate_max_length],
+        verbose_name="Nome",
     )
     email = models.EmailField(
-        max_length=200, validators=[validate_empty, validate_max_length]
+        max_length=200,
+        validators=[validate_empty, validate_max_length],
+        unique=True,
+        verbose_name="Email",
     )
     password = models.CharField(
-        max_length=200, validators=[validate_empty, validate_max_length]
+        max_length=200,
+        validators=[validate_empty, validate_max_length],
+        verbose_name="Senha",
     )
     role = models.CharField(
-        max_length=200, validators=[validate_empty, validate_max_length]
+        max_length=200,
+        validators=[validate_empty, validate_max_length],
+        verbose_name="Função",
     )
 
     def __str__(self):
@@ -47,7 +57,9 @@ class News(models.Model):
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="news"
     )
-    created_at = models.DateField(validators=[validate_date])
+    created_at = models.DateField(
+        default=timezone.now, validators=[validate_date]
+    )
     image = models.ImageField(upload_to="img/", null=True, blank=True)
     categories = models.ManyToManyField(
         Category, related_name="news", validators=[validate_empty]
