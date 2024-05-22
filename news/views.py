@@ -1,6 +1,6 @@
-from django.http import Http404
-from django.shortcuts import get_object_or_404, render
-from news.models import News
+from django.shortcuts import get_object_or_404, redirect, render
+from news.forms import CreateCategoryForm
+from news.models import News, Category
 
 
 def home(request):
@@ -8,10 +8,19 @@ def home(request):
     return render(request, "home.html", context)
 
 
-def details(request, id):
-    try:
-        news = get_object_or_404(News, id=id)
-        context = {"news": news}
-        return render(request, "news_details.html", context)
-    except Http404:
-        return render(request, "404.html")
+def details(request, news_id):
+    news = get_object_or_404(News, id=news_id)
+    context = {"news": news}
+    return render(request, "news_details.html", context)
+
+
+def categories(request):
+    form = CreateCategoryForm()
+    if request.method == "POST":
+        form = CreateCategoryForm(request.POST)
+        if form.is_valid():
+            Category.objects.create(**form.cleaned_data)
+            return redirect("home-page")
+
+    context = {"form": form}
+    return render(request, "categories_form.html", context)

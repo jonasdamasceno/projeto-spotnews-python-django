@@ -9,8 +9,8 @@ Página Inicial
 {% for item in news %}
 <a href="{% url 'news-details-page' item.id %}">
   <div>
-    <h2 class="news-title">{{item.title}}</h2>
-    <span class="news-date">{{item.created_at|date:"d/m/Y"}}</span>
+    <h2 class='news-title'>{{item.title}}</h2>
+    <span class='news-date'>{{item.created_at|date:"d/m/Y"}}</span>
     <img src="{% static item.image.url %}">
   </div>
 </a>
