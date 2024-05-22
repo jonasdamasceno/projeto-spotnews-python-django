@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from news.forms import CreateCategoryForm
 from news.models import News, Category
@@ -9,9 +10,12 @@ def home(request):
 
 
 def details(request, news_id):
-    news = get_object_or_404(News, id=news_id)
-    context = {"news": news}
-    return render(request, "news_details.html", context)
+    try:
+        news = get_object_or_404(News, id=news_id)
+        context = {"news": news}
+        return render(request, "news_details.html", context)
+    except Http404:
+        return render(request, "404.html")
 
 
 def categories(request):
