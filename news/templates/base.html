@@ -15,13 +15,12 @@
     <ul class='header-links'>
       <a href="{% url 'home-page' %}">Home</a>
       <a href="{% url 'categories-form' %}">Cadastrar Categorias</a>
+      <a href="{% url 'news-form' %}">Cadastrar Notícias</a>
     </ul>
   </header>
-
-  <main role="main">
+  <div class='news-container'>
     {% block content %}{% endblock %}
-  </main>
-
+  </div>
 </body>
 
 </html>
